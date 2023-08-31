@@ -1,0 +1,25 @@
+html, body, .container {
+    height: 100%;
+}
+
+body {
+    background-color: lightblue;
+    font-family: monospace;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+#output {
+    font-size: 200%;
+}
+
+#myButton {
+    font-size: 15pt;
+    width: 150px;
+    height: 50pt;
+}
