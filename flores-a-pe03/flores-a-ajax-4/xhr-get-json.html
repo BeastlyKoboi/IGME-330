@@ -38,9 +38,7 @@
 					document.querySelector("#output").innerHTML = "JSON is null!";
 				}
 
-
 				let jsonObj;
-
 				try {
 					jsonObj = JSON.parse(response);
 
@@ -50,9 +48,7 @@
 				}
 
 				const jsonKeys = Object.keys(jsonObj);
-
 				let html = ``;
-
 				for (let key of jsonKeys) {
 					html += `<h3>${jsonObj[key]["title"]}</h3>`;
 					html += `<ol>${jsonObj[key]["namelist"].map((x) => `<li>${x}</li>`).join("")}</ol>`;
