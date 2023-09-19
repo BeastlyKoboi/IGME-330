@@ -1,0 +1,10 @@
+{
+    "title": "Greeter",
+    "greetings": [
+        "Hi",
+        "Hello",
+        "Hey there",
+        "Howdy",
+        "What's up"
+    ]
+}
