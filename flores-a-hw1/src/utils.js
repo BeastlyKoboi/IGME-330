@@ -1,3 +1,2 @@
-export const getRandomItem = (array) => {
-    return array[Math.floor(Math.random() * array.length)];
-};
+const getRandomItem = arr => arr[Math.floor(Math.random() * arr.length)];
+export { getRandomItem };

@@ -1,6 +1,4 @@
-let words1
-let words2;
-let words3;
+let words1, words2, words3;
 
 let output;
 
@@ -26,19 +24,13 @@ const babbleLoaded = (e) => {
 
     let jsonObject = JSON.parse(response);
 
-    words1 = jsonObject.words1;
-    words2 = jsonObject.words2;
-    words3 = jsonObject.words3;
+    ({ words1, words2, words3 } = jsonObject);
 
     const babbleBtn = document.querySelector("#babble-btn");
     const multiBabbleBtn = document.querySelector("#multi-babble-btn");
 
-    babbleBtn.addEventListener("click", () => {
-        getTechnobabble(1);
-    });
-    multiBabbleBtn.addEventListener("click", () => {
-        getTechnobabble(5);
-    });
+    babbleBtn.addEventListener("click", () => getTechnobabble(1));
+    multiBabbleBtn.addEventListener("click", () => getTechnobabble(5));
 
     getTechnobabble(1);
 };
