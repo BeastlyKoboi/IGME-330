@@ -47,11 +47,18 @@
             ctx.lineWidth = 5;
             ctx.stroke();
 
+            ctx.beginPath();
+            ctx.moveTo(620, 20);
+            ctx.lineTo(20, 460);
+            ctx.closePath();
+            ctx.lineWidth = 5;
+            ctx.stroke();
+
             // Circle
             ctx.fillStyle = "green";
             ctx.strokeStyle = "purple";
             ctx.beginPath();
-            ctx.arc(320, 240, 50, 0, Math.PI, false);
+            ctx.arc(320, 240, 50, 0, 2 * Math.PI, false);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
@@ -63,6 +70,32 @@
             ctx.arc(320, 240, 20, 0, Math.PI, false);
             ctx.closePath();
             ctx.fill();
+            ctx.stroke();
+
+            // Left Eye
+            ctx.fillStyle = "gray";
+            ctx.strokeStyle = "yellow";
+            ctx.beginPath();
+            ctx.arc(300, 220, 10, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Right Eye
+            ctx.fillStyle = "gray";
+            ctx.strokeStyle = "yellow";
+            ctx.beginPath();
+            ctx.arc(340, 220, 10, 0, 2 * Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Added Line
+            ctx.beginPath();
+            ctx.moveTo(20, 50);
+            ctx.lineTo(620, 50);
+            ctx.closePath();
+            ctx.lineWidth = 20;
             ctx.stroke();
 
             update();

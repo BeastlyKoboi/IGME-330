@@ -31,9 +31,9 @@
         let canvas;
         let ctx;
         let paused = false;
-        let createRectangles = true;
-        let createArcs = true;
-        let createLines = true;
+        let createRectangles;
+        let createArcs;
+        let createLines;
 
         function init() {
             console.log("Page Loaded!");
@@ -50,13 +50,23 @@
             drawRectangle(ctx, 120, 120, 400, 300, "yellow", 10, "magenta");
 
             // Lines
-            drawLine(ctx, 20, 20, 620, 460, 5);
+            drawLine(ctx, 20, 20, 620, 460, 5, "magenta");
+            drawLine(ctx, 620, 20, 20, 460, 5, "magenta");
 
             // Circle
-            drawArc(ctx, 320, 240, 50, "green", 1, "purple", 0, Math.PI);
+            drawArc(ctx, 320, 240, 50, "green", 1, "purple", 0, 2 * Math.PI);
 
             // small circle
             drawArc(ctx, 320, 240, 20, "gray", 1, "yellow", 0, Math.PI);
+
+            // Left Eye
+            drawArc(ctx, 300, 220, 10, "gray", 1, "yellow", 0, 2 * Math.PI);
+
+            // Right Eye
+            drawArc(ctx, 340, 220, 10, "gray", 1, "yellow", 0, 2 * Math.PI);
+
+            // Added Line
+            drawLine(ctx, 20, 50, 620, 50, 20, "yellow");
 
             setupUI();
 
@@ -156,6 +166,10 @@
             };
 
             canvas.onclick = canvasClicked;
+
+            createRectangles = document.querySelector("#cbRectangles").checked;
+            createArcs = document.querySelector("#cbArcs").checked;
+            createLines = document.querySelector("#cbLines").checked;
 
             document.querySelector("#cbRectangles").onclick = function (e) {
                 createRectangles = e.target.checked;
