@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sine Start</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="src/main.js"></script>
+</head>
+
+<body>
+    <div id="controls">
+
+        <canvas id="canvas"></canvas>
+
+        <p id="label-dots">Dots: 0</p>
+
+        <div>
+            <label>Divergence Angle</label>
+            <select id="ctrl-divergence">
+                <option value="137.1">137.1</option>
+                <option value="137.3">137.3</option>
+                <option value="137.5" selected>137.5</option>
+                <option value="137.7">137.7</option>
+                <option value="137.7">137.9</option>
+            </select>
+        </div>
+
+        <label id="label-padding" for="range-padding">Padding</label>
+        <div class="slidecontainer">
+            <input type="range" min="2" max="6" value="4" class="slider" id="range-padding">
+        </div>
+
+        <label id="label-dot-radius" for="range-dot-radius">Dot Radius</label>
+        <div class="slidecontainer">
+            <input type="range" min="2" max="6" value="2" class="slider" id="range-dot-radius">
+        </div>
+
+        <button id="btn-restart">Restart</button>
+
+        <p>
+            I added a slider for the padding and the radius of the dots. I also added options for different divergence
+            angles. As well as additional labels for some important values and a restart button.
+        </p>
+    </div>
+
+</body>
+
+</html>
