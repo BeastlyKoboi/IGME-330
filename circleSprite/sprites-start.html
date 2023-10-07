@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Sprites Start</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+    <script>
+
+        "use strict";
+        const canvasWidth = 640, canvasHeight = 480;
+
+        let ctx;
+        const sprites = [];
+
+        class CircleSprite {
+            static type = "arc"; // demoing a static (class) variable here
+            constructor(x, y, radius, color) {
+                console.log(`${this.constructor.type} created`); // access static property (alternatively, CircleSprite.type)
+                // YOU DO THIS - initialize .x, .y, .radius and .color properties
+                // this.x = x;
+                // this.y = y;
+                // this.radius = radius;
+                // this.color = color;
+                Object.assign(this, { x, y, radius, color });
+                this.xSpeed = 1;
+                this.ySpeed = 1;
+            }
+
+            update() {
+                // YOU DO THIS - increase the .x, and .y properties by 1
+                this.x += this.xSpeed;
+                this.y += this.ySpeed;
+                if (this.x > canvasWidth)
+                    this.xSpeed = -1;
+                if (this.y > canvasHeight)
+                    this.ySpeed = -1;
+                if (this.x < 0)
+                    this.xSpeed = 1;
+                if (this.y < 0)
+                    this.ySpeed = 1;
+
+            }
+
+            draw(ctx) {
+                // YOU DO THIS 
+                // fill a circle - utilize the ctx argument, and the .x, .y, .radius and .color properties
+                // don't forget about ctx.save() and ctx.restore()
+
+                ctx.save();
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const loop = () => {
+            setTimeout(loop, 1000 / 60);
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+            // for (let spr of sprites) {
+            //     spr.update();
+            //     spr.draw(ctx);
+            // }
+            sprites.forEach(s => {
+                s.update();
+                s.draw(ctx);
+            });
+        }
+
+        const init = () => {
+            ctx = canvas.getContext("2d");
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            sprites.push(new CircleSprite(200, 200, 20, "red"));
+            sprites.push(new CircleSprite(100, 100, 20, "green"));
+            loop();
+        };
+
+        window.onload = init;
+
+    </script>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+
+</body>
+
+</html>
