@@ -9,12 +9,12 @@
 
 import * as utils from './utils.js';
 import * as audio from './audio.js';
-import * as canvas from './canvas.js';
+import * as canvas from './visualizer.js';
 
 const drawParams = {
     showGradient    : true,
     showBars        : true,
-    showBars        : true,
+    showCircles     : true,
     showNoise       : true
 };
 
@@ -38,13 +38,13 @@ function setupUI(canvasElement) {
     // A - hookup fullscreen button
     const fsButton = document.querySelector("#fsButton");
 
-    // add .onclick event to button
+    // add .onclick event to fullscreen button
     fsButton.onclick = e => {
         console.log("goFullscreen() called");
         utils.goFullscreen(canvasElement);
     };
 
-    // Ad .onclick event to button
+    // Ad .onclick event to Play/Pause button
     playButton.onclick = e => {
         console.log(`audioCtx.state before = ${audio.audioCtx.state}`);
 
@@ -89,6 +89,27 @@ function setupUI(canvasElement) {
             playButton.dispatchEvent(new MouseEvent("click"));
         }
     };
+
+    // Checkboxes
+    // gradient
+    let gradientCheckBox = document.querySelector("#gradientCB");
+    gradientCheckBox.onchange = e => {
+        drawParams.showGradient = e.target.checked;
+    };
+    gradientCheckBox.checked = true;
+    // bars
+    let barsCheckBox = document.querySelector("#barsCB");
+    barsCheckBox.onchange = e => {
+        drawParams.showBars = e.target.checked;
+    };
+    barsCheckBox.checked = true;
+    // circles 
+    let circleCheckBox = document.querySelector("#circlesCB");
+    circleCheckBox.onchange = e => {
+        drawParams.showCircles = e.target.checked;
+    };
+    circleCheckBox.checked = true;
+
 
 } // end setupUI
 
