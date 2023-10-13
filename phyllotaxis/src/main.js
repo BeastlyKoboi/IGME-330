@@ -9,7 +9,7 @@ let paddingLabel;
 let dotRad = 2;
 let dotRadLabel;
 
-import { dtr } from "./utils.js";
+import { dtr, drawCircle } from "./utils.js";
 
 function init() {
     ctx = canvas.getContext("2d");
@@ -80,18 +80,9 @@ function loop() {
     let color = `hsl(${numDots / 5 % 361},100%,50%)`;
 
     drawCircle(ctx, x, y, dotRad, color);
-    numDots++
+    numDots++;
     dotsLabel.innerHTML = `Dots: ${numDots}`;
-}
 
-function drawCircle(ctx, x, y, radius, color) {
-    ctx.save();
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
 }
 
 init();
