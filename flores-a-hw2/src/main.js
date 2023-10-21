@@ -12,12 +12,12 @@ import * as audio from './audio.js';
 import * as canvas from './visualizer.js';
 
 const drawParams = {
-    showGradient    : true,
-    showBars        : true,
-    showCircles     : true,
-    showNoise       : true,
-    showInvert      : false,
-    showEmboss      : false
+    showGradient: true,
+    showBars: true,
+    showCircles: true,
+    showNoise: true,
+    showInvert: false,
+    showEmboss: false
 };
 
 // 1 - here we are faking an enumeration
@@ -25,7 +25,7 @@ const DEFAULTS = Object.freeze({
     sound1: "media/New Adventure Theme.mp3"
 });
 
-function init() {
+const init = () => {
     console.log("init called");
     console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
     audio.setupWebaudio(DEFAULTS.sound1);
@@ -36,9 +36,10 @@ function init() {
     loop();
 }
 
-function setupUI(canvasElement) {
+const setupUI = (canvasElement) => {
     // A - hookup fullscreen button
-    const fsButton = document.querySelector("#fsButton");
+    const playButton = document.querySelector("#btn-play");
+    const fsButton = document.querySelector("#btn-fullscreen");
 
     // add .onclick event to fullscreen button
     fsButton.onclick = e => {
@@ -67,8 +68,8 @@ function setupUI(canvasElement) {
     };
 
     // C - hookup volume slider & label 
-    let volumeSlider = document.querySelector("#volumeSlider");
-    let volumeLabel = document.querySelector("#volumeLabel");
+    let volumeSlider = document.querySelector("#slider-volume");
+    let volumeLabel = document.querySelector("#lbl-volume");
 
     // add .oninput event to slider
     volumeSlider.oninput = e => {
@@ -82,7 +83,7 @@ function setupUI(canvasElement) {
     volumeSlider.dispatchEvent(new Event("input"));
 
     // D - hookup track <select>
-    let trackSelect = document.querySelector("#trackSelect");
+    let trackSelect = document.querySelector("#select-track");
     // add .onchange event to <select>
     trackSelect.onchange = e => {
         audio.loadSoundFile(e.target.value);
@@ -94,37 +95,37 @@ function setupUI(canvasElement) {
 
     // Checkboxes
     // gradient
-    let gradientCheckBox = document.querySelector("#gradientCB");
+    let gradientCheckBox = document.querySelector("#cb-gradient");
     gradientCheckBox.onchange = e => {
         drawParams.showGradient = e.target.checked;
     };
     gradientCheckBox.checked = drawParams.showGradient;
     // bars
-    let barsCheckBox = document.querySelector("#barsCB");
+    let barsCheckBox = document.querySelector("#cb-bars");
     barsCheckBox.onchange = e => {
-        drawParams.showGradient = e.target.checked;
+        drawParams.showBars = e.target.checked;
     };
-    barsCheckBox.checked = drawParams.showGradient;
+    barsCheckBox.checked = drawParams.showBars;
     // circles 
-    let circleCheckBox = document.querySelector("#circlesCB");
+    let circleCheckBox = document.querySelector("#cb-circles");
     circleCheckBox.onchange = e => {
         drawParams.showCircles = e.target.checked;
     };
     circleCheckBox.checked = drawParams.showCircles;
     // noise
-    let noiseCheckBox = document.querySelector("#noiseCB");
+    let noiseCheckBox = document.querySelector("#cb-noise");
     noiseCheckBox.onchange = e => {
         drawParams.showNoise = e.target.checked;
     };
     noiseCheckBox.checked = drawParams.showNoise;
     // invert 
-    let invertCheckBox = document.querySelector("#invertCB");
+    let invertCheckBox = document.querySelector("#cb-invert");
     invertCheckBox.onchange = e => {
         drawParams.showInvert = e.target.checked;
     };
     invertCheckBox.checked = drawParams.showInvert;
     // emboss
-    let embossCheckBox = document.querySelector("#embossCB");
+    let embossCheckBox = document.querySelector("#cb-emboss");
     embossCheckBox.onchange = e => {
         drawParams.showEmboss = e.target.checked;
     }
@@ -133,15 +134,15 @@ function setupUI(canvasElement) {
 
 } // end setupUI
 
-function loop() {
-    requestAnimationFrame(loop);
+const loop = () => {
+    setTimeout( loop, 1000 / 60 );
 
     canvas.draw(drawParams);
 
     // testing();
 }
 
-function testing() {
+const testing = () => {
     // 1) create a byte array (values of 0-255) to hold the audio data
     // normally, we do this once when the program starts up, NOT every frame
     let audioData = new Uint8Array(audio.analyserNode.fftSize / 2);

@@ -1,21 +1,25 @@
 body {
     background: #eeeeee;
     font-family: tahoma, verdana, sans serif;
+    margin: 0 auto;
 }
 
 canvas {
-    margin-left: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding: 0;
+    margin: 0 auto;
+    display: block;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
     background: #fafafa;
 }
 
 #controls {
-    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
 }
 
-#volumeLabel {
+#lbl-volume {
     margin-left: 1rem;
 }
 
@@ -23,7 +27,7 @@ section {
     margin-bottom: 1rem;
 }
 
-#playButton {
+#btn-play {
     font-size: 1.2rem;
     width: 6rem;
 }
@@ -36,7 +40,7 @@ button[data-playing="no"]:after {
     content: "Play";
 }
 
-#fsButton {
+#btn-fullscreen {
     font-size: 1.2rem;
     width: 8rem;
 }
