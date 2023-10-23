@@ -20,6 +20,27 @@ const getLinearGradient = (ctx, startX, startY, endX, endY, colorStops) => {
     return lg;
 };
 
+const drawSquare = (ctx, x, y, width, height, rotation, scale, fillStyle) => {
+    ctx.save();  // save the old state attributes
+    ctx.fillStyle = fillStyle;
+    ctx.translate(x, y);
+    ctx.rotate(rotation);
+    ctx.scale(scale, scale);
+    // now we'll draw from the center to get the rotation right
+    ctx.fillRect(0 - width / 2, 0 - height / 2, width, height);
+    ctx.restore();
+}
+
+const drawCircle = (ctx, x, y, radius, color, scale = 1) => {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, radius * scale, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
 const goFullscreen = (element) => {
     if (element.requestFullscreen) {
@@ -34,4 +55,16 @@ const goFullscreen = (element) => {
     // .. and do nothing if the method is not supported
 };
 
-export { makeColor, getRandomColor, getLinearGradient, goFullscreen };
+const loadJSON = (url, callback) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = callback;
+    xhr.onerror = e => console.log(`In onerror - HTTP Status Code = ${e.target.status}`);
+    xhr.open("GET", url);
+    xhr.send();
+};
+
+export {
+    makeColor, getRandomColor, getLinearGradient,
+    drawSquare, drawCircle,
+    goFullscreen, loadJSON
+};

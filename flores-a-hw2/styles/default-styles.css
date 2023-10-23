@@ -1,7 +1,10 @@
 body {
-    background: #eeeeee;
+    background: #00137e;
     font-family: tahoma, verdana, sans serif;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
 }
 
 canvas {
@@ -13,10 +16,31 @@ canvas {
 }
 
 #controls {
+    padding: 1rem;
+    margin: 1rem;
+    background-color: rgb(223, 223, 255);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
+    width: fit-content;
+}
+
+#controls-audio {
+    display: flex;
+    align-content: space-around;
+    align-items: center;
+    justify-content:space-around;
+    flex-flow: row nowrap;
+    
+}
+
+.ctrl-audio{
+    padding: 0 1rem;
+    /* border-color: rgb(0, 0, 0);
+    border-radius: 1px;
+    border-style:solid; */
 }
 
 #lbl-volume {
@@ -24,12 +48,21 @@ canvas {
 }
 
 section {
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 }
 
 #btn-play {
     font-size: 1.2rem;
     width: 6rem;
+}
+
+#select-track {
+    font-size: 1.2rem;
+
+}
+
+#select-data-type {
+    font-size: 1.2rem;
 }
 
 button[data-playing="yes"]:after {

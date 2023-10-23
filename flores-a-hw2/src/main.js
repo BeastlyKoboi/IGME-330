@@ -11,30 +11,76 @@ import * as utils from './utils.js';
 import * as audio from './audio.js';
 import * as canvas from './visualizer.js';
 
+let paused = false;
+
 const drawParams = {
-    showGradient: true,
+    useFrequencyData: true,
+    useWaveformData: false,
     showBars: true,
     showCircles: true,
-    showNoise: true,
-    showInvert: false,
-    showEmboss: false
+    showInvert: false
 };
 
-// 1 - here we are faking an enumeration
-const DEFAULTS = Object.freeze({
-    sound1: "media/New Adventure Theme.mp3"
+const DEFAULTS = Object.seal({
+    defaultSound: "media/New Adventure Theme.mp3",
+    impulseResponse: "",
+    distortion: 0,
+    hasReverb: true,
+    layerColors: []
 });
 
 const init = () => {
     console.log("init called");
-    console.log(`Testing utils.getRandomColor() import: ${utils.getRandomColor()}`);
-    audio.setupWebaudio(DEFAULTS.sound1);
+
+    utils.loadJSON("./data/av-data.json", saveJSON);
+};
+
+const saveJSON = (e) => {
+    const response = e.target.responseText;
+    if (!response) {
+        console.log(`Error in JSON response`);
+    }
+
+    let defaultInfo = JSON.parse(response);
+
+    document.querySelector("title").innerHTML = defaultInfo.title;
+
+    let soundOptions;
+    ({ soundOptions } = defaultInfo);
+
+    let optionsHTML = soundOptions.map(option => { return `<option value="${option.url}">${option.name}</option>` }).join("");
+    document.querySelector("#select-track").innerHTML = optionsHTML;
+    DEFAULTS.defaultSound = soundOptions[0].url;
+
+    DEFAULTS.impulseResponse = defaultInfo.impulseResponse;
+
+    DEFAULTS.hasReverb = defaultInfo.hasReverb;
+
+    drawParams.useFrequencyData = defaultInfo.useFrequency;
+    drawParams.useWaveformData = !defaultInfo.useFrequency;
+
+    DEFAULTS.layerColors = defaultInfo.layerStartingColors;
+
+    setupModules();
+};
+
+const setupModules = () => {
+    audio.DEFAULTS.hasReverb = DEFAULTS.hasReverb;
+    audio.setupWebaudio(DEFAULTS.defaultSound, DEFAULTS.impulseResponse);
     let canvasElement = document.querySelector("canvas"); // hookup <canvas> element
     setupUI(canvasElement);
-    canvas.setupCanvas(canvasElement, audio.analyserNode);
+    canvas.setupCanvas(canvasElement, audio.analyserNode, DEFAULTS.layerColors);
+
+    window.onblur = () => {
+        paused = true;
+    };
+    window.onfocus = () => {
+        paused = false;
+        loop();
+    };
 
     loop();
-}
+};
 
 const setupUI = (canvasElement) => {
     // A - hookup fullscreen button
@@ -67,7 +113,7 @@ const setupUI = (canvasElement) => {
         }
     };
 
-    // C - hookup volume slider & label 
+    // hookup volume slider & label 
     let volumeSlider = document.querySelector("#slider-volume");
     let volumeLabel = document.querySelector("#lbl-volume");
 
@@ -82,7 +128,7 @@ const setupUI = (canvasElement) => {
     // set value of label to match initial value of slider
     volumeSlider.dispatchEvent(new Event("input"));
 
-    // D - hookup track <select>
+    // hookup track <select>
     let trackSelect = document.querySelector("#select-track");
     // add .onchange event to <select>
     trackSelect.onchange = e => {
@@ -92,14 +138,36 @@ const setupUI = (canvasElement) => {
             playButton.dispatchEvent(new MouseEvent("click"));
         }
     };
+    trackSelect.dispatchEvent(new Event("change"));
+
+    // Toggle for Frequency or Waveform data
+    let dataUsed = document.querySelector("#select-data-type");
+    dataUsed.onchange = e => {
+        if (e.target.value == "frequency") {
+            drawParams.useFrequencyData = true;
+            drawParams.useWaveformData = false;
+        }
+        else {
+            drawParams.useFrequencyData = false;
+            drawParams.useWaveformData = true;
+        }
+    };
+    dataUsed.selectedIndex = (drawParams.useFrequencyData) ? 0 : 1;
+    dataUsed.dispatchEvent(new Event("change"));
+
+    document.querySelector('#slider-distortion').value = DEFAULTS.distortion;
+    document.querySelector('#slider-distortion').onchange = e => {
+        let value = Number(e.target.value);
+        audio.setDistortion(value);
+    };
+
+    let reverbCheckbox = document.querySelector("#cb-reverb");
+    reverbCheckbox.onchange = e => {
+        audio.toggleReverb();
+    };
+    reverbCheckbox.checked = DEFAULTS.hasReverb;
 
     // Checkboxes
-    // gradient
-    let gradientCheckBox = document.querySelector("#cb-gradient");
-    gradientCheckBox.onchange = e => {
-        drawParams.showGradient = e.target.checked;
-    };
-    gradientCheckBox.checked = drawParams.showGradient;
     // bars
     let barsCheckBox = document.querySelector("#cb-bars");
     barsCheckBox.onchange = e => {
@@ -112,35 +180,36 @@ const setupUI = (canvasElement) => {
         drawParams.showCircles = e.target.checked;
     };
     circleCheckBox.checked = drawParams.showCircles;
-    // noise
-    let noiseCheckBox = document.querySelector("#cb-noise");
-    noiseCheckBox.onchange = e => {
-        drawParams.showNoise = e.target.checked;
-    };
-    noiseCheckBox.checked = drawParams.showNoise;
     // invert 
     let invertCheckBox = document.querySelector("#cb-invert");
     invertCheckBox.onchange = e => {
         drawParams.showInvert = e.target.checked;
     };
     invertCheckBox.checked = drawParams.showInvert;
-    // emboss
-    let embossCheckBox = document.querySelector("#cb-emboss");
-    embossCheckBox.onchange = e => {
-        drawParams.showEmboss = e.target.checked;
-    }
-    embossCheckBox.checked = drawParams.showEmboss;
 
+    // 
+    document.querySelector("#color-layer1").value = DEFAULTS.layerColors[0];
+    document.querySelector("#color-layer2").value = DEFAULTS.layerColors[1];
+    document.querySelector("#color-layer3").value = DEFAULTS.layerColors[2];
+    document.querySelector("#color-layer4").value = DEFAULTS.layerColors[3];
 
-} // end setupUI
+    document.querySelector("#color-layer1").oninput = e => { canvas.setLayerColor(1, e.target.value); };
+    document.querySelector("#color-layer2").oninput = e => { canvas.setLayerColor(2, e.target.value); };
+    document.querySelector("#color-layer3").oninput = e => { canvas.setLayerColor(3, e.target.value); };
+    document.querySelector("#color-layer4").oninput = e => { canvas.setLayerColor(4, e.target.value); };
+
+}; // end setupUI
 
 const loop = () => {
-    setTimeout( loop, 1000 / 60 );
+    if (paused)
+        return;
+
+    setTimeout(loop, 1000 / 60);
 
     canvas.draw(drawParams);
 
     // testing();
-}
+};
 
 const testing = () => {
     // 1) create a byte array (values of 0-255) to hold the audio data
@@ -169,6 +238,6 @@ const testing = () => {
     console.log(`maxLoudness = ${maxLoudness}`);
     console.log(`loudnessAt2K = ${loudnessAt2K}`);
     console.log("---------------------");
-}
+};
 
 export { init };
