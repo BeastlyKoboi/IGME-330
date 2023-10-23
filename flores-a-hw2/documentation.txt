@@ -1,0 +1,34 @@
+Tell us about the 2 Audio Effect nodes you added to the audio routing graph
+I added two audio effect nodes, WaveShaper for distortion and Convolver for 
+a reverb effect. The reverb node required the use of a impulse response to 
+work and I used a free one from the internet. 
+
+Tell us your Sprite's class name, what it looks like/what it does in the visualization
+My sprite class is umnimaginitively called Sprite and at the moment it always looks 
+like a colored circle. In the visualization there are 4 layers of these Sprites each with 
+a different default distance from the center for rotating and a common color. Each layer 
+of Sprites takes a single value from a quarter of the audioData and uses that to scale 
+both their size and distance from the center. A higher audioData value means means 
+farther from the center and bigger in scale. They disappear because the scale goes to 
+zero when the audioData is zero. 
+
+Tell us what app data you put in your av-data.json file
+The JSON file contains the title, the files options that can be played, the impulse 
+response file for the reverb, and some default specs for the audio visualizer. That 
+last is comprised of specifying the audioData type used, the reverb toggle, and the 
+layer starting colors. 
+
+Tell us how you improved the aesthetics of the app over the AV HW:
+    be sure to give yourself a grade for this section, between 0% and 15%
+    0% would be if there was not a meaningful improvement over the AV HW
+    15% would be substantial improvement over the AV HW - a "wow" experience
+    and everything in between
+The bouncing/scaling Sprites provide a unique visualization of the sounds and naturally
+create interesting patterns. The globalCompositeOperation for the Sprites is set to 
+"lighter" in order to create an effect where colors can combine to give more vibrance. 
+I would give myself a 10% probably, since while I do believe this is a significant and 
+fun improvement, it is not very polished and it ignores a lot of audioData to create the 
+patterns. There is also room for a lot of improvements, including adding other shapes into the 
+layers, changing colors by data as well, or making more layers, and doing more with the 
+pulsing circles in the center. There are many tweaks and big changes that would improve the 
+aesthetics, but it is a good step up from the PE in my opinion.
