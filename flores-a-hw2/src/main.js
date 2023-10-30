@@ -23,6 +23,7 @@ const drawParams = {
 
 const DEFAULTS = Object.seal({
     defaultSound: "media/New Adventure Theme.mp3",
+    volume: 0,
     impulseResponse: "",
     distortion: 0,
     hasReverb: true,
@@ -51,6 +52,8 @@ const saveJSON = (e) => {
     let optionsHTML = soundOptions.map(option => { return `<option value="${option.url}">${option.name}</option>` }).join("");
     document.querySelector("#select-track").innerHTML = optionsHTML;
     DEFAULTS.defaultSound = soundOptions[0].url;
+
+    DEFAULTS.volume = defaultInfo.volume;
 
     DEFAULTS.impulseResponse = defaultInfo.impulseResponse;
 
@@ -121,11 +124,14 @@ const setupUI = (canvasElement) => {
     volumeSlider.oninput = e => {
         // set the gain
         audio.setVolume(e.target.value);
+        console.log(e.target.value);
         // update value of label to match value of slider 
         volumeLabel.innerHTML = Math.round((e.target.value / 2 * 100));
     };
 
     // set value of label to match initial value of slider
+    volumeSlider.value = DEFAULTS.volume;
+    console.log(volumeSlider);
     volumeSlider.dispatchEvent(new Event("input"));
 
     // hookup track <select>

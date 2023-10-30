@@ -14,6 +14,7 @@
             "url": "media/The Picard Song.mp3"
         }
     ],
+    "volume": 1,
     "impulseResponse": "media/BIG HALL E001 M2S.wav",
     "hasReverb": false,
     "useFrequency": true,

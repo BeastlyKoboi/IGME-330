@@ -96,7 +96,6 @@ const setVolume = value => {
 
 const setDistortion = value => {
     value = Number(value);
-    console.log(value);
     if (value) {
         distortionFilter.curve = makeDistortionCurve(value);
     }
