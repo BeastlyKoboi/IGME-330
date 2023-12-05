@@ -1,0 +1,27 @@
+{
+    "title": "AUDIO VISUALIZER",
+    "soundOptions": [
+        {
+            "name": "New Adventure Theme",
+            "url": "media/New Adventure Theme.mp3"
+        },
+        {
+            "name": "Peanuts Theme",
+            "url": "media/Peanuts Theme.mp3"
+        },
+        {
+            "name": "The Picard Song",
+            "url": "media/The Picard Song.mp3"
+        }
+    ],
+    "volume": 1,
+    "impulseResponse": "media/BIG HALL E001 M2S.wav",
+    "hasReverb": false,
+    "useFrequency": true,
+    "layerStartingColors": [
+        "#FF0000",
+        "#00FF00",
+        "#0000FF",
+        "#00FFFF"
+    ]
+}

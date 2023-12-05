@@ -1,0 +1,74 @@
+body {
+    background: #00137e;
+}
+
+canvas {
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    background: #fafafa;
+}
+
+#controls {
+    padding: 1rem;
+    margin: 0 auto;
+    background-color: rgb(223, 223, 255);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    width: fit-content;
+}
+
+#controls-audio {
+    display: flex;
+    align-content: space-around;
+    align-items: center;
+    justify-content:space-around;
+    flex-flow: row nowrap;
+    
+}
+
+.ctrl-audio{
+    padding: 0 1rem;
+    /* border-color: rgb(0, 0, 0);
+    border-radius: 1px;
+    border-style:solid; */
+}
+
+#lbl-volume {
+    margin-left: 1rem;
+}
+
+section {
+    margin-bottom: .5rem;
+}
+
+#btn-play {
+    font-size: 1.2rem;
+    width: 6rem;
+}
+
+#select-track {
+    font-size: 1.2rem;
+
+}
+
+#select-data-type {
+    font-size: 1.2rem;
+}
+
+button[data-playing="yes"]:after {
+    content: "Pause";
+}
+
+button[data-playing="no"]:after {
+    content: "Play";
+}
+
+#btn-fullscreen {
+    font-size: 1.2rem;
+    width: 8rem;
+}

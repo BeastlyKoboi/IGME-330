@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Exam #2 - Practice B</title>
+  <style>
+    canvas {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Exam #2 - Practice B</h1>
+  <canvas width="400" height="300"></canvas>
+  <script>
+    "use strict";
+
+    const ctx = document.querySelector("canvas").getContext("2d");
+
+    // Exam #1 questions (you should still know how to do for exam #2)
+
+    // 1 - Write canvas code that will draw a 10-pixel wide green line from (200,200) to (200,400)
+    // 2 - Write canvas code that will fill a 50-pixel radius circle with a solid red color. The circle is centered at (100,100)
+    // 3 - And similar for a rectangle, building a path manually, without using fillRect() or strokeRect()
+
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 10;
+    ctx.beginPath()
+    ctx.moveTo(200, 200);
+    ctx.lineTo(200, 400);
+    ctx.closePath()
+    ctx.stroke()
+
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.arc(100, 100, 50, 0, 2 * Math.PI, false);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.rect(100, 100, 200, 200);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(50, 50);
+    ctx.lineTo(100, 75);
+    ctx.lineTo(150, 50);
+    ctx.lineTo(50, 50);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Here are some new canvas questions
+
+    /*
+    4) Without using fillRect() or strokeRect(), draw a 30 x 30 pixel square at (100,100).
+    Fill the square with a solid red color, and rotate it 45 degrees to the right on its
+    center axis.
+    
+    
+    5) Implement the following helper function. Don't forget about our best
+    practice of using save() and restore()
+    */
+
+    ctx.save();
+    ctx.translate(100, 100)
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "green";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.moveTo(-15, -15);
+    ctx.lineTo(15, -15);
+    ctx.lineTo(15, 15);
+    ctx.lineTo(-15, 15);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+
+    const drawCircle = (x, y, radius, fillStyle, scaleX, scaleY) => {
+      // YOU WRITE THE REST
+      ctx.save();
+      ctx.translate(x, y)
+      ctx.scale(scaleX, scaleY);
+      ctx.fillStyle = fillStyle;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, 2 * Math.PI, false);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    };
+
+    drawCircle(200, 200, 20, "blue", 1, 1);
+
+
+  </script>
+
+
+</body>
+
+</html>

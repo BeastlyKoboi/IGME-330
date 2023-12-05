@@ -1,0 +1,7 @@
+The language I transferred this project to was typescript. 
+I made the suggested changes to get rid of errors and then tackled the warnings. 
+I added two interfaces colorStop and drawParams in order to better utilize typescript 
+when drawing. I refrained from changing the DEFAULTS in main and audio to an enum, 
+because I still needed to change that information after loading in the startin state 
+from the JSON. There was definitely a better way to do it, but I was unable to find a 
+solution that was much better. 
